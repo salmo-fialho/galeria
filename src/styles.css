@@ -1,0 +1,172 @@
+/* CSS existente */
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+}
+
+header {
+  background: linear-gradient(50deg, #5e005e, #a167e4, #5e005e);
+  padding: 20px;
+  text-align: center;
+  box-shadow: 4 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  color: #ff2bf4;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5em;
+  margin: 0;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.3s ease-in-out;
+}
+
+.site-main {
+  overflow: hidden;
+}
+
+header h1:hover {
+  color: #ffaaff;
+}
+
+.scrollbar-container {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.parallax-background-section {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.parallax-background-element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 110%;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.parallax-background-section.pbe-1 .parallax-background-element {
+  background-image: url('./imagens/fundo1.png');
+}
+
+.parallax-background-section.pbe-2 .parallax-background-element {
+  background-image: url('./imagens/aura.jpg');
+}
+
+.gallery {
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: #ff2bf4;
+  border-radius: 10px;
+  border-width: 8px;
+  margin: 10px;
+}
+
+.gallery img {
+  max-width: 100%;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+img {
+  width: 500px;
+  height: 500px;
+}
+
+.gallery img:hover {
+  transform: scale(1.10);
+}
+
+.gallery .image-container img {
+  width: 100%;
+  max-width: 250px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.image-container {
+  justify-content: center;
+  align-items: center;
+}
+
+/* Alterações mínimas para o modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+}
+
+.modal-content {
+  margin: auto;
+  display: flex;
+  width: 80%;
+  max-width: 700px;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-caption {
+  text-align: center;
+  color: #ffffff;
+  padding: 10px 0;
+}
+
+.modal .close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.modal .close:hover,
+.modal .close:focus {
+  color: #bbb;
+}
+
+.modal .prev,
+.modal .next {
+  color: #ffffff;
+  font-size: 24px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.prev {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.next {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
