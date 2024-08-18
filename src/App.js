@@ -20,7 +20,7 @@ const ParallaxSection = ({ className, backgroundImage }) => (
   </section>
 );
 
-// Função para criar o modal
+
 const Modal = ({ image, closeModal, changeSlide }) => (
   <div className="modal" style={{ display: image ? 'block' : 'none' }}>
     <span className="close" onClick={closeModal}>&times;</span>
@@ -32,7 +32,7 @@ const Modal = ({ image, closeModal, changeSlide }) => (
   </div>
 );
 
-// Função para criar a galeria
+
 const Gallery = ({ images, openModal }) => (
   <section className="gallery">
     <div className="image-container">
