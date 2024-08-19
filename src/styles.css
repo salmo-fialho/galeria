@@ -4,15 +4,41 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background: #f4f4f4;
+  background: linear-gradient(90deg, #5e005e, #a167e4, #5e005e)
 }
 
 header {
   background: linear-gradient(50deg, #5e005e, #a167e4, #5e005e);
   padding: 20px;
   text-align: center;
-  box-shadow: 4 4px 8px rgba(0, 0, 0, 0.1);
+
+  outline: 1px solid #ff2bf4;
+  outline-offset: -1px;
+  transition: all .3s linear;
+  cursor: pointer;
+  &:hover {
+      outline: 1px solid transparent;
+      background: 
+          linear-gradient(90deg, #ff2bf4 50%, transparent 0) repeat-x,
+          linear-gradient(90deg, #ff2bf4 50%, transparent 0) repeat-x,
+          linear-gradient(0deg, #ff2bf4 50%, transparent 0) repeat-y,
+          linear-gradient(0deg, #ff2bf4 50%, transparent 0) repeat-y;
+      background-size: 4px 1px, 4px 1px, 1px 4px, 1px 4px;
+      background-position: 0 0, 0 100%, 0 0, 100% 0;
+      animation: linearGradientMove .3s infinite linear;
+  }
 }
+
+@keyframes linearGradientMove {
+  100% {
+      background-position: 4px 0, -4px 100%, 0 -4px, 100% 4px;
+  }
+  
+}
+
+
+
+
 
 header h1 {
   color: #ff2bf4;
@@ -23,6 +49,7 @@ header h1 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.3s ease-in-out;
 }
+
 
 .site-main {
   overflow: hidden;
@@ -38,10 +65,8 @@ header h1:hover {
 }
 
 .parallax-background-section {
-  height: 100vh;
   background-size: cover;
-  background-position: center;
-  position: relative;
+  background-repeat: no-repeat;
 }
 
 .parallax-background-element {
@@ -56,12 +81,13 @@ header h1:hover {
   background-repeat: no-repeat;
 }
 
-.parallax-background-section.pbe-1 .parallax-background-element {
-  background-image: url('./imagens/fundo1.png');
+
+.parallax-background-section:nth-of-type(1) .parallax-background-element {
+  background-image: url('./imagensFundo/aura.jpg'); /* Ajuste o caminho se necessário */
 }
 
-.parallax-background-section.pbe-2 .parallax-background-element {
-  background-image: url('./imagens/aura.jpg');
+.parallax-background-section:nth-of-type(2) .parallax-background-element {
+  background-image: url('./imagensFundo/fundo1.png'); /* Ajuste o caminho se necessário */
 }
 
 .gallery {
@@ -120,7 +146,7 @@ img {
 
 .modal-content {
   margin: auto;
-  display: flex;
+  display: grid;
   width: 80%;
   max-width: 700px;
   align-items: center;
@@ -128,11 +154,13 @@ img {
 }
 
 .modal-caption {
+  align-items:baseline ;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
   text-align: center;
-  color: #ffffff;
-  padding: 10px 0;
 }
-
 .modal .close {
   position: absolute;
   top: 15px;

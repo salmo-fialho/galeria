@@ -1,42 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './styles.css';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+import { Parallax } from 'react-parallax';
 import Scrollbar from 'smooth-scrollbar';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import gsap from 'gsap';
 
-// Importação direta das imagens
-import circulo1 from './imagens/circulo1.jpg';
-import salo from './imagens/salo.png';
-import fundo1 from './imagens/fundo1.png';
-import aura from './imagens/aura.jpg';
+// Importar todas as imagens da pasta imagens
+const importAll = (r) => {
+  let images = {};
+  r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+  return images;
+};
 
-// Função para criar a seção de parallax
-const ParallaxSection = ({ className, backgroundImage }) => (
-  <section
-    className={`parallax-background-section ${className}`}
-    style={{ backgroundImage: `url(${backgroundImage})` }}
-  >
-    <div className="parallax-background-element"></div>
-  </section>
-);
+const images = importAll(require.context('./imagens', false, /\.(jpg|jpeg|png)$/));
+const fundoImagens = importAll(require.context('./imagensFundo', false, /\.(jpg|jpeg|png)$/));
 
-
-const Modal = ({ image, closeModal, changeSlide }) => (
+const Modal = ({ image, closeModal, caption, changeSlide }) => (
   <div className="modal" style={{ display: image ? 'block' : 'none' }}>
     <span className="close" onClick={closeModal}>&times;</span>
     <div className="modal-content">
       <a className="prev" onClick={() => changeSlide(-1)}>&#10094;</a>
       <img className="modal-img" src={image} alt="Modal" />
+      <div className="modal-caption">{caption}</div>
       <a className="next" onClick={() => changeSlide(1)}>&#10095;</a>
     </div>
   </div>
 );
 
-
 const Gallery = ({ images, openModal }) => (
   <section className="gallery">
     <div className="image-container">
-      {images.map((img, index) => (
+      {Object.values(images).map((img, index) => (
         <img
           key={index}
           src={img}
@@ -54,8 +48,6 @@ function App() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const scrollContainerRef = useRef(null);
 
-  const images = [circulo1, circulo1, circulo1, circulo1, salo];
-
   const openModal = (index) => {
     setCurrentSlide(index);
     setModalOpen(true);
@@ -67,8 +59,8 @@ function App() {
 
   const changeSlide = (direction) => {
     let newIndex = currentSlide + direction;
-    if (newIndex >= images.length) newIndex = 0;
-    if (newIndex < 0) newIndex = images.length - 1;
+    if (newIndex >= Object.keys(images).length) newIndex = 0;
+    if (newIndex < 0) newIndex = Object.keys(images).length - 1;
     setCurrentSlide(newIndex);
   };
 
@@ -84,7 +76,7 @@ function App() {
       thumbMinSize: 15
     });
 
-    ScrollTrigger.scrollerProxy(".scrollbar-container", {
+    ScrollTrigger.scrollerProxy(scroller, {
       scrollTop(value) {
         if (arguments.length) {
           bodyScrollBar.scrollTop = value;
@@ -95,34 +87,37 @@ function App() {
 
     bodyScrollBar.addListener(ScrollTrigger.update);
 
+    ScrollTrigger.defaults({
+      scroller: scroller
+    });
+
     gsap.utils.toArray('.parallax-background-section').forEach((section, i) => {
-      const bg = section.querySelector(".parallax-background-element");
-      if (!bg) return;
+      section.bg = section.querySelector(".parallax-background-element");
 
       if (i) {
-        bg.style.backgroundPosition = `50% ${window.innerHeight / 2}px`;
-        gsap.to(bg, {
-          backgroundPosition: `50% ${-window.innerHeight / 2}px`,
+        section.bg.style.backgroundPosition = `50% ${window.innerHeight / 2}px`;
+        gsap.to(section.bg, {
+          backgroundPosition: `40% ${-window.innerHeight / 2}px`,
           ease: "none",
           scrollTrigger: {
             trigger: section,
             scrub: true,
-            onUpdate: function(self) {
-              gsap.set(bg, { top: self.scroll() - section.offsetTop });
+            onUpdate: function (self) {
+              gsap.set(section.bg, { top: self.scroll() - section.bg.parentElement.offsetTop });
             }
           }
         });
       } else {
-        bg.style.backgroundPosition = "50% 0px";
-        gsap.to(bg, {
+        section.bg.style.backgroundPosition = "50% 0px";
+        gsap.to(section.bg, {
           backgroundPosition: `50% ${-window.innerHeight / 2}px`,
           ease: "none",
           scrollTrigger: {
             trigger: section,
             start: "top top",
             scrub: true,
-            onUpdate: function(self) {
-              gsap.set(bg, { top: self.scroll() - section.offsetTop });
+            onUpdate: function (self) {
+              gsap.set(section.bg, { top: self.scroll() - section.bg.parentElement.offsetTop });
             }
           }
         });
@@ -135,6 +130,9 @@ function App() {
     };
   }, [currentSlide]);
 
+  const currentImage = Object.values(images)[currentSlide];
+  const caption = `Imagem ${currentSlide + 1}`;
+
   return (
     <div className="App">
       <header>
@@ -142,14 +140,25 @@ function App() {
       </header>
       <main id="primary" className="site-main">
         <div className="scrollbar-container" ref={scrollContainerRef}>
-          <ParallaxSection className="pbe-2" backgroundImage={aura} />
+          <Parallax
+            bgImage={fundoImagens['aura.jpg']}
+            strength={200}
+            style={{ height: '100vh', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}
+          >
+          </Parallax>
           <Gallery images={images} openModal={openModal} />
-          <ParallaxSection className="pbe-1" backgroundImage={fundo1} />
+          <Parallax
+            bgImage={fundoImagens['fundo1.png']}
+            strength={200}
+            style={{ height: '100vh', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}
+          >
+          </Parallax>
         </div>
       </main>
       <Modal
-        image={modalOpen ? images[currentSlide] : null}
+        image={modalOpen ? currentImage : null}
         closeModal={closeModal}
+        caption={caption}
         changeSlide={changeSlide}
       />
     </div>
