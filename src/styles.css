@@ -4,14 +4,14 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(90deg, #5e005e, #a167e4, #5e005e)
+  background: linear-gradient(90deg, #5e005e, #a167e4, #5e005e);
+  
 }
 
 header {
   background: linear-gradient(50deg, #5e005e, #a167e4, #5e005e);
   padding: 20px;
   text-align: center;
-
   outline: 1px solid #ff2bf4;
   outline-offset: -1px;
   transition: all .3s linear;
@@ -51,6 +51,18 @@ header h1 {
 }
 
 
+.text-h1{
+  color: #840988;
+  font-family: 'Poppins', sans-serif;
+  font-size: 3.5em;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+
 .site-main {
   overflow: hidden;
 }
@@ -83,40 +95,38 @@ header h1:hover {
 
 
 .parallax-background-section:nth-of-type(1) .parallax-background-element {
-  background-image: url('./imagensFundo/aura.jpg'); /* Ajuste o caminho se necessário */
+  background-image: url('./imagensFundo/aura.jpg'); 
 }
 
 .parallax-background-section:nth-of-type(2) .parallax-background-element {
-  background-image: url('./imagensFundo/fundo1.png'); /* Ajuste o caminho se necessário */
+  background-image: url('./imagensFundo/fundo1.png');
 }
 
 .gallery {
   padding: 10px;
+  margin: 20px;
   align-items: center;
   justify-content: center;
-  display: flex;
-  background-color: #ff2bf4;
+  background: linear-gradient(50deg, #e000e0, #ff54bd, #e046ff);
   border-radius: 10px;
-  border-width: 8px;
-  margin: 10px;
+  box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;
 }
 
 .gallery img {
   max-width: 100%;
   height: auto;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.3s;
+  width: 200px;
+  height: 200px;
+  box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
 }
 
-img {
-  width: 500px;
-  height: 500px;
-}
 
 .gallery img:hover {
   transform: scale(1.10);
+  
 }
-
 .gallery .image-container img {
   width: 100%;
   max-width: 250px;
@@ -126,10 +136,12 @@ img {
 
 .image-container {
   justify-content: center;
-  align-items: center;
+  display:block;
+  text-align: center;
+  
 }
 
-/* Alterações mínimas para o modal */
+
 .modal {
   display: none;
   position: fixed;

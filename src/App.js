@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './styles.css';
-import { Parallax } from 'react-parallax';
 import Scrollbar from 'smooth-scrollbar';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import gsap from 'gsap';
+import SimpleParallax from "simple-parallax-js";
 
-// Importar todas as imagens da pasta imagens
+
+const Component = () => (   <SimpleParallax scale={1.7}>
+  <img src={"./src/imagensFundo/aura.jpg"} alt={"image"} />
+</SimpleParallax>)
+
+
 const importAll = (r) => {
   let images = {};
   r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
@@ -30,7 +35,10 @@ const Modal = ({ image, closeModal, caption, changeSlide }) => (
 const Gallery = ({ images, openModal }) => (
   <section className="gallery">
     <div className="image-container">
-      {Object.values(images).map((img, index) => (
+      <div className='text-h1'><text>Galeria</text></div>
+        
+       
+            {Object.values(images).map((img, index) => (
         <img
           key={index}
           src={img}
@@ -97,7 +105,7 @@ function App() {
       if (i) {
         section.bg.style.backgroundPosition = `50% ${window.innerHeight / 2}px`;
         gsap.to(section.bg, {
-          backgroundPosition: `40% ${-window.innerHeight / 2}px`,
+          backgroundPosition: `50% ${-window.innerHeight / 2}px`,
           ease: "none",
           scrollTrigger: {
             trigger: section,
@@ -140,19 +148,20 @@ function App() {
       </header>
       <main id="primary" className="site-main">
         <div className="scrollbar-container" ref={scrollContainerRef}>
-          <Parallax
-            bgImage={fundoImagens['aura.jpg']}
-            strength={200}
-            style={{ height: '100vh', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}
-          >
-          </Parallax>
+       
+          <SimpleParallax delay={1} transition="cubic-bezier(0,0,0,3)" className="parallax-background-section">
+            <img src={fundoImagens["aura.jpg"]} alt={"image"} style={{width:'100%'}} />
+          </SimpleParallax>
+         
           <Gallery images={images} openModal={openModal} />
-          <Parallax
-            bgImage={fundoImagens['fundo1.png']}
-            strength={200}
-            style={{ height: '100vh', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}
-          >
-          </Parallax>
+
+          <SimpleParallax maxTransition={40}>
+            <img
+              src={fundoImagens["fundo1.png"]}
+              alt={"fundo1.jpg"}
+              style={{ width: "100%" }}
+            />
+          </SimpleParallax>
         </div>
       </main>
       <Modal
@@ -163,6 +172,9 @@ function App() {
       />
     </div>
   );
+
+  
+
 }
 
 export default App;
